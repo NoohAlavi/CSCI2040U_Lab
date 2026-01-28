@@ -7,27 +7,24 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
-    private final CatalogService service = new CatalogService();
-    private final Scanner scanner = new Scanner(System.in);
+    private final CatalogService service = new CatalogService("src/data/catalog.csv");
+    private final Scanner sc = new Scanner(System.in);
 
     public void start() {
         while (true) {
-            System.out.println("\n=== Catalog Management System ===");
-            System.out.println("1. View Items");
-            System.out.println("2. Add Item");
-            System.out.println("3. Edit Item");
-            System.out.println("4. Exit");
-            System.out.print("Choose option: ");
+            System.out.println("\n=== Catalog ===");
+            System.out.println("1) Display items");
+            System.out.println("2) View item details (by ID)");
+            System.out.println("0) Exit");
+            System.out.print("Choose: ");
 
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+            String choice = sc.nextLine().trim();
 
             switch (choice) {
-                case 1 -> viewItems();
-                case 2 -> addItem();
-                case 3 -> editItem();
-                case 4 -> {
-                    System.out.println("Exiting...");
+                case "1" -> displayItems();
+                case "2" -> viewDetails();
+                case "0" -> {
+                    System.out.println("Goodbye");
                     return;
                 }
                 default -> System.out.println("Invalid option.");
@@ -35,40 +32,36 @@ public class Menu {
         }
     }
 
-    private void viewItems() {
+    private void displayItems() {
         List<CatalogItem> items = service.getAllItems();
-        for (CatalogItem item : items) {
-            System.out.println(item);
+        if (items.isEmpty()) {
+            System.out.println("(No items found)");
+            return;
+        }
+
+        System.out.println("\nID | Name");
+        System.out.println("---------");
+        for (CatalogItem it : items) {
+            System.out.println(it.getId() + " | " + it.getName());
         }
     }
 
-    private void addItem() {
-        System.out.print("Name: ");
-        String name = scanner.nextLine();
-        System.out.print("Description: ");
-        String desc = scanner.nextLine();
+    private void viewDetails() {
+        System.out.print("Enter ID: ");
+        String input = sc.nextLine().trim();
 
-        if (service.addItem(name, desc)) {
-            System.out.println("Item added.");
-        } else {
-            System.out.println("Invalid input.");
+        int id;
+        try {
+            id = Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            System.out.println("Please enter a valid number.");
+            return;
         }
-    }
 
-    private void editItem() {
-        System.out.print("Enter ID to edit: ");
-        int id = scanner.nextInt();
-        scanner.nextLine();
-
-        System.out.print("New Name: ");
-        String name = scanner.nextLine();
-        System.out.print("New Description: ");
-        String desc = scanner.nextLine();
-
-        if (service.editItem(id, name, desc)) {
-            System.out.println("Item updated.");
-        } else {
-            System.out.println("Edit failed.");
+        CatalogItem it = service.getItemById(id);
+        if (it == null) {
+            System.out.println("Item not found.");
         }
     }
 }
+
