@@ -26,8 +26,10 @@ public class CatalogService {
 
     private void loadFromCsv(String path) {
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
-            String line = br.readLine(); // header
-            if (line == null) return;
+            // String line = br.readLine(); // header
+            // if (line == null) return;
+
+            String line;
 
             while ((line = br.readLine()) != null) {
                 if (line.trim().isEmpty()) continue;
@@ -59,14 +61,14 @@ public class CatalogService {
         }
     }
 
-    public static void main(String[] args) {
-        List<CatalogItem> items = new ArrayList<>();
+    // public static void main(String[] args) {
+    //     List<CatalogItem> items = new ArrayList<>();
         
-        items.add(new CatalogItem(0, "test", "desc"));
-        items.add(new CatalogItem(1, "test2", "desc2"));
-        items.add(new CatalogItem(2, "test3", "desc3"));
+    //     items.add(new CatalogItem(0, "test", "desc"));
+    //     items.add(new CatalogItem(1, "test2", "desc2"));
+    //     items.add(new CatalogItem(2, "test3", "desc3"));
 
-        writeToCsv(items, "Lab2/src/data/catalog.csv");
-    }
+    //     writeToCsv(items, "Lab2/src/data/catalog.csv");
+    // }
 }
 
