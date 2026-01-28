@@ -6,6 +6,10 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 
 public class CatalogService {
     private final List<CatalogItem> items = new ArrayList<>();
@@ -47,5 +51,25 @@ public class CatalogService {
             System.out.println("Failed to load CSV: " + e.getMessage());
         }
     }
+    
+    public void saveToCsv(String csvPath) {
+        try (PrintWriter pw = new PrintWriter(new FileWriter(csvPath))) {
+            pw.println("id,name,description");
+
+            
+            for (CatalogItem item : items) {
+                pw.println(
+                        item.getId() + "," +
+                        item.getName() + "," +
+                        item.getDescription()
+                );
+            }
+
+        } catch (IOException e) {
+            System.out.println("Failed to save catalog to CSV: " + e.getMessage());
+        }
+    }
+
 }
+
 
