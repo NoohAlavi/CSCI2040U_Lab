@@ -1,13 +1,12 @@
 package ui;
 
+import java.util.List;
+import java.util.Scanner;
 import model.CatalogItem;
 import service.CatalogService;
 
-import java.util.List;
-import java.util.Scanner;
-
 public class Menu {
-    private final CatalogService service = new CatalogService("src/data/catalog.csv");
+    private final CatalogService service = new CatalogService("Lab2/src/data/catalog.csv");
     private final Scanner sc = new Scanner(System.in);
 
     public void start() {
