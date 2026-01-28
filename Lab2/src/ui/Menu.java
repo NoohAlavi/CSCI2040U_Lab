@@ -63,6 +63,11 @@ public class Menu {
             System.out.println("Item not found.");
             return;
         }
+
+        System.out.println("ID No. " + id + " | Name: " + it.getName());
+        System.out.println("---------");
+        System.out.println("Description: " + it.getDescription());
+
     }
 }
 
