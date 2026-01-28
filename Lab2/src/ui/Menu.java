@@ -58,6 +58,7 @@ public class Menu {
         }
 
         CatalogItem it = service.getItemById(id);
+
         if (it == null) {
             System.out.println("Item not found.");
             return;
